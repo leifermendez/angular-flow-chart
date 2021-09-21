@@ -1,0 +1,31 @@
+<ngx-graph #myChart class="chart-container" *ngIf="showRender" [view]="dimensions" [links]="dataLink" [nodes]="dataNode" [curve]="curve" [layoutSettings]="layoutSettings" layout="dagreCluster">
+
+    <!-- #1 Esto es la punta de la flecha! 🔴-->
+    <ng-template #defsTemplate>
+        <svg:marker id="arrow" fill="#3CCFA0" viewBox="0 -5 10 10" refX="8" refY="0" markerWidth="4" markerHeight="4" orient="auto">
+            <svg:path d="M0,-5L10,0L0,5" class="arrow-head" />
+        </svg:marker>
+    </ng-template>
+
+    <!-- #2 Esto es la tarjeta con el contenido -->
+    <ng-template #nodeTemplate let-node>
+        <svg:g class="node">
+            <svg:foreignObject width="250" height="350">
+                <xhtml:div xmlns="http://www.w3.org/1999/xhtml">
+                    <app-flow-card-node [dataIn]="node"></app-flow-card-node>
+                </xhtml:div>
+            </svg:foreignObject>
+        </svg:g>
+    </ng-template>
+
+    <!-- #3 Esto son las lineas-->
+    <ng-template #linkTemplate let-link>
+        <svg:g class="edge">
+            <svg:path class="line" stroke-width="4" marker-end="url(#arrow)"></svg:path>
+            <svg:text class="edge-label" text-anchor="middle">
+
+            </svg:text>
+        </svg:g>
+    </ng-template>
+
+</ngx-graph>

@@ -1,0 +1,16 @@
+<div class="header">
+    <div class="header-section header-section-1">
+        <div class="logo">
+            <img src="https://i.imgur.com/cWpeT4W.jpg" alt="">
+        </div>
+        <div class="title">Leifer EXAMPLE</div>
+    </div>
+    <div class="header-section header-section-2">
+        <ul class="menu">
+            <li (click)="callSource()" *ngFor="let item of menu">
+                <span>{{item.name}}</span>
+            </li>
+        </ul>
+    </div>
+    <div class="header-section header-section-3"></div>
+</div>

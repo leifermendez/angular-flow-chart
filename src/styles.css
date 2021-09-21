@@ -1,1 +1,35 @@
 /* You can add global styles to this file, and also import other style files */
+
+:root {
+    --color-1: #FFFFFF;
+    --color-2: #2B2E50;
+    --color-3: #454B6B;
+    --color-4: #D3D5EB;
+    --text-color-1: #1A1A1A;
+    --text-color-2: #C5C5C5;
+    --font-family: 'Nunito', sans-serif;
+    --font-family-1: 'Architects Daughter', cursive;
+    --border-radius: .15rem
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    font-size: 1rem;
+    background-color: var(--color-2);
+    color: var(--text-color-2);
+    font-family: var(--font-family);
+}
+
+button,
+input,
+textarea {
+    font-size: 1rem;
+    color: var(--text-color-1);
+    font-family: var(--font-family);
+}
+
+button {
+    cursor: pointer;
+}
