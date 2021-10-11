@@ -2,7 +2,7 @@
             *ngIf="!flowForm.valid">🤬</span></b></div>
 <div><b style="color: black;">Values: {{flowForm.value?.steps | json}} 🤔🤔 {{showRender}}</b></div> -->
 
-<ngx-graph #myChart [update$]="update$" class="chart-container" *ngIf="showRender" [view]="dimensions" [links]="dataLink" [nodes]="dataNode" [curve]="curve" [layoutSettings]="layoutSettings" layout="dagreCluster">
+<ngx-graph #myChart class="chart-container" *ngIf="showRender" [view]="dimensions" [links]="dataLink" [nodes]="dataNode" [curve]="curve" [layoutSettings]="layoutSettings" layout="dagreCluster">
 
 
     <!-- #1 Esto es la punta de la flecha! 🔴-->

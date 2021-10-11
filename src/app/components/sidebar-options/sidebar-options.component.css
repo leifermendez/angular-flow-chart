@@ -18,3 +18,10 @@
 .sidebar-options-wrapper h4 {
     color: #1a1a1a
 }
+
+.sidebar-options-wrapper button {
+    border: solid 1px lightgray;
+    margin: .25rem;
+    padding: .4rem;
+    border-radius: var(--border-radius);
+}

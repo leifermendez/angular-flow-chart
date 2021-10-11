@@ -55,7 +55,6 @@ export class FlowCardNodeComponent implements OnInit, AfterViewInit {
           subElement: res[2]
         };
         const step = this.managmentState.getStateFrom(tree)
-        console.log('-->', step);
 
         // const [step] = this.managmentState.getStateFrom(tree) as any
         this.stateCurrent = step.key
@@ -110,7 +109,7 @@ export class FlowCardNodeComponent implements OnInit, AfterViewInit {
   }
 
   setNode(): void {
-    // this.flowChartService.addStep({ type: 'modal' })
+    this.flowChartService.addStep()
   }
 
   addElement(type: string): void {

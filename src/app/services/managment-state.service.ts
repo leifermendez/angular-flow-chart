@@ -50,7 +50,9 @@ export class ManagmentStateService {
     const observable: StepObservable = {
       key,
       state,
+      label: key,
       id: key,
+      data: { color: 'red' },
       statePrperties: {
         get$: new Subject,
         get: (propertyKey: string) => this.getCurrentState(key, propertyKey),
@@ -81,6 +83,8 @@ export interface StepObservable {
   id?: string;
   state: StepState;
   statePrperties: any;
+  data?: any,
+  label: string;
 }
 
 export interface StepState {

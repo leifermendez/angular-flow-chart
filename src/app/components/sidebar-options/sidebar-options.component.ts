@@ -87,16 +87,18 @@ export class SidebarOptionsComponent implements OnInit {
         style = {
           color: 'green',
           'background-color': 'blue',
-          'font-weigth': '600'
+          'font-weight': '600'
         }
         break;
       default:
         style = {
-          color: 'white',
-          'background-color': 'blue'
+          color: 'tomato',
+          'background-color': '#bdeac9',
+          'font-weight': '600'
         }
         break;
     }
+
 
 
     const setValueStructure = {
@@ -104,11 +106,6 @@ export class SidebarOptionsComponent implements OnInit {
         style
       }
     }
-    console.log('______', structure[index]);
-
-    structure[index] = setValueStructure
-
-    console.log('🤦‍♂️🤦‍♂️🤦‍♂️___', structure[index]);
 
     this.stateCurrent.statePrperties.set(
       'structure', [...structure]

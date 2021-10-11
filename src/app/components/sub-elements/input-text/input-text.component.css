@@ -6,3 +6,9 @@
     padding: .35rem 0;
     border: solid 2px transparent
 }
+
+.wrapper-input input {
+    border: solid 1px lightgray;
+    border-radius: var(--border-radius);
+    padding: .5rem;
+}

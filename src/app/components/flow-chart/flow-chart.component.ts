@@ -61,7 +61,8 @@ export class FlowChartComponent implements OnInit {
         this.dataNode = [...steps]
         // this.update$.next(true)
 
-        console.log('🔴🔴🔴', link);
+        console.log('🎁LINK🎁', link);
+        console.log('🎉NODE🎉', steps);
 
       })
 
