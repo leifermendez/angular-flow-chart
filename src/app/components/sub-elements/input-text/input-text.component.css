@@ -3,6 +3,7 @@
 }
 
 .wrapper-input {
+    margin: .5rem;
     padding: .35rem 0;
     border: solid 2px transparent
 }

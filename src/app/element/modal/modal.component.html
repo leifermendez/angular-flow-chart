@@ -1,5 +1,6 @@
 <div (click)="selectModal($event)" class="wrapper-element-modal">
-    <ng-container *ngFor="let e of structure;let i = index">
+    <ng-container *ngFor="let e of structure;let i = index;trackBy: trackByFn">
         <app-input-text [customStyle]="e" [index]="i" [key]="e.key" *ngIf="e.element === 'text'"></app-input-text>
+        <app-input-img [customStyle]="e" [index]="i" [key]="e.key" *ngIf="e.element === 'img'"></app-input-img>
     </ng-container>
 </div>

@@ -60,9 +60,6 @@ export class ManagmentStateService {
       }
     }
 
-    console.log('-----', observable);
-    console.log('🆗🆗🆗-', state);
-
     this.stepsObserverArray.push(observable)
     this.steps$.next(this.stepsObserverArray)
   }

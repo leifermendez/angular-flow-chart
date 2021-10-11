@@ -64,7 +64,7 @@ export class SidebarOptionsComponent implements OnInit {
     const { structure }: StepState = state
     const currentStructure = structure
     this.stateCurrent.statePrperties.set(
-      'structure', [...currentStructure, ...[{ element: 'text' }]]
+      'structure', [...currentStructure, ...[{ element: typeIn }]]
     )
   }
 
@@ -107,6 +107,7 @@ export class SidebarOptionsComponent implements OnInit {
       }
     }
 
+    structure[index] = setValueStructure
     this.stateCurrent.statePrperties.set(
       'structure', [...structure]
     )

@@ -55,6 +55,9 @@ export class ModalComponent implements OnInit, AfterViewInit {
     event.stopPropagation()
   }
 
+  trackByFn(index: number, item: any): any {
+    return item.key;
+  }
   private makeComponent(element: 'add_text' | 'add_img'): void {
     // this.container.remove()
     // if (element === 'add_text') {

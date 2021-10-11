@@ -23,5 +23,6 @@
     border: solid 1px lightgray;
     margin: .25rem;
     padding: .4rem;
+    font-weight: 500;
     border-radius: var(--border-radius);
 }
