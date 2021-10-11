@@ -7,12 +7,14 @@
 }
 
 .bg-custom-white {
-    color: rgba(255, 255, 255, .05);
+    background-color: #F5F5F8;
+    color: rgba(134, 134, 134, 0.2);
 }
 
 .flow-chart-wrapper {
     margin-top: 55px;
-    width: 100%;
+    margin-left: 60px;
+    width: calc(100% - 60px);
     height: calc(100% - 55px);
 }
 

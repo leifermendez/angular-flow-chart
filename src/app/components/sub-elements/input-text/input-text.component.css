@@ -1,0 +1,8 @@
+.wrapper-input:hover {
+    border: solid 2px palevioletred
+}
+
+.wrapper-input {
+    padding: .35rem 0;
+    border: solid 2px transparent
+}

@@ -1,0 +1,27 @@
+<div class="sidebar-options-wrapper">
+    <h4>Options for Step</h4>
+    <ul>
+        <li *ngIf="elements.step">
+            <div>
+                <div style="color:black"><b>STEP ID: </b> {{elements.step}}</div>
+                <button (click)="addElement('modal')">MODAL</button>
+                <button (click)="addElement('tooltip')">TOOLTIP</button>
+            </div>
+        </li>
+        <li *ngIf="elements?.element> -1">
+            <div>
+                <button (click)="addSubElement('img')">IMG</button>
+                <button (click)="addSubElement('text')">TEXT</button>
+            </div>
+        </li>
+        <li *ngIf="elements?.subElement> -1">
+            <div>
+                <button (click)="changeColorText(elements?.subElement,0)">COLOR 1</button>
+                <button (click)="changeColorText(elements?.subElement,1)">COLOR 2</button>
+                <button (click)="changeColorText(elements?.subElement,2)">COLOR 3</button>
+            </div>
+        </li>
+    </ul>
+
+
+</div>

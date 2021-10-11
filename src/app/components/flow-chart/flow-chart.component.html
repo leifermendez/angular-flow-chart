@@ -1,4 +1,9 @@
-<ngx-graph #myChart class="chart-container" *ngIf="showRender" [view]="dimensions" [links]="dataLink" [nodes]="dataNode" [curve]="curve" [layoutSettings]="layoutSettings" layout="dagreCluster">
+<!-- <div><b style="color: black;">Flow General Valido?: <span *ngIf="flowForm.valid">🆗</span> <span
+            *ngIf="!flowForm.valid">🤬</span></b></div>
+<div><b style="color: black;">Values: {{flowForm.value?.steps | json}} 🤔🤔 {{showRender}}</b></div> -->
+
+<ngx-graph #myChart [update$]="update$" class="chart-container" *ngIf="showRender" [view]="dimensions" [links]="dataLink" [nodes]="dataNode" [curve]="curve" [layoutSettings]="layoutSettings" layout="dagreCluster">
+
 
     <!-- #1 Esto es la punta de la flecha! 🔴-->
     <ng-template #defsTemplate>
@@ -10,9 +15,9 @@
     <!-- #2 Esto es la tarjeta con el contenido -->
     <ng-template #nodeTemplate let-node>
         <svg:g class="node">
-            <svg:foreignObject width="250" height="350">
+            <svg:foreignObject #wrapperForeign width="300" height="420">
                 <xhtml:div xmlns="http://www.w3.org/1999/xhtml">
-                    <app-flow-card-node [dataIn]="node"></app-flow-card-node>
+                    <app-flow-card-node (cbRemove)="removeStep($event)" [dataIn]="node"></app-flow-card-node>
                 </xhtml:div>
             </svg:foreignObject>
         </svg:g>

@@ -1,0 +1,10 @@
+.wrapper-element-modal {
+    background-color: white;
+    min-height: 18rem;
+    border-radius: var(--border-radius);
+    border: solid 2px transparent;
+}
+
+.wrapper-element-modal:hover {
+    border: solid 2px blueviolet;
+}

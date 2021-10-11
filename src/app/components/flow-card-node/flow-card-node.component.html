@@ -1,17 +1,19 @@
 <div class="wrapper-node animate__animated animate__bounceIn">
-    <div class="node-template">
-        <!-- <div class="node-template-header">
-            {{dataIn?.data?.title}} ({{dataIn?.label}})
-        </div> -->
+    <div class="node-alert"> {{dataIn.state.type| json}} _ {{dataIn.id| json}}.</div>
+    <button (click)="removeStep(dataIn.id)" class="btn-remove">
+        <app-trash></app-trash>
+    </button>
+    <div (click)="selectNode(dataIn)" class="node-template" [ngClass]="{'activate-node':(stateCurrent === dataIn.id)}">
         <div class="node-template-body">
-            <div *ngIf="dataIn?.data?.img">
-                <img [src]="dataIn?.data?.img" width="100px" height="100px" alt="">
-            </div>
-            <div [innerHTML]="dataIn?.data?.text"></div>
-            <div *ngIf="dataIn?.action" class="node-button">
-                <button (click)="callChilds(dataIn?.action?.src, dataIn?.action?.key)">VER RUTA ({{dataIn?.label}})<i
-                        class="uil uil-angle-right-b"></i></button>
-            </div>
+            <app-modal [key]="dataIn.key" *ngIf="dataIn.state.type === 'modal'"></app-modal>
+            <app-tooltip *ngIf="dataIn.state.type === 'tooltip'"></app-tooltip>
+
         </div>
+    </div>
+    <div class="node-template-zone-actions">
+        <button (click)="setNode()" class="btn-add-block">
+            <i class="uil uil-plus-circle"></i><span> Add Step</span>
+        </button>
+
     </div>
 </div>

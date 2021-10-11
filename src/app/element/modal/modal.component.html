@@ -1,0 +1,5 @@
+<div (click)="selectModal($event)" class="wrapper-element-modal">
+    <ng-container *ngFor="let e of structure;let i = index">
+        <app-input-text [customStyle]="e" [index]="i" [key]="e.key" *ngIf="e.element === 'text'"></app-input-text>
+    </ng-container>
+</div>

@@ -1,10 +1,9 @@
 .header {
-    background-color: var(--color-1);
-    color: var(--text-color-1);
+    background-color: #1abc9c;
+    color: #ffffff;
     display: grid;
     grid-template-columns: 2fr 3fr 1fr;
-    height: 55px;
-    box-shadow: 0px 7px 10px #14173840;
+    box-shadow: 0px 7px 10px #14173812;
     z-index: 2;
     position: absolute;
     width: 100%;
@@ -35,7 +34,8 @@
     border-radius: 2rem;
 }
 
-.header-section-2 .menu {
+.header-section-2 .menu,
+.header-section-3 .menu {
     margin: 0;
     padding: 0;
     list-style: none;

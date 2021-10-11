@@ -1,0 +1,8 @@
+.sidebar-wrapper {
+    background-color: #1B2B47;
+    z-index: 1;
+    position: fixed;
+    left: 0;
+    width: 60px;
+    height: 100%;
+}

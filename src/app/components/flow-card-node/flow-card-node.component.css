@@ -1,12 +1,33 @@
 .wrapper-node {
     display: inline-flex;
     min-height: 350px;
-    width: 100%;
+    width: calc(100% - 1rem);
+    flex-direction: column;
+}
+
+.wrapper-node .btn-remove {
+    z-index: 2;
+    cursor: pointer;
+    position: absolute;
+    right: -5px;
+    top: 5px;
+    padding: .25rem;
+    text-align: center;
+    color: red;
+    background-color: white;
+    border-radius: var(--border-radius);
+    border: 0;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
 .node-template {
+    background-color: #1abc9c14;
     /* background-color: rgba(255, 255, 255, .12); */
     border-radius: var(--border-radius);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 35px;
+    /* background-image: url('../../../assets/inbox.png'); */
     min-height: 330px;
     color: var(--text-color-1);
     padding: 0;
@@ -17,6 +38,14 @@
     /* box-shadow: 0 0 8px 2px #0000006b; */
     flex-direction: column;
     justify-content: end;
+    border: solid 2px transparent;
+    /* box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px; */
+    filter: drop-shadow(0px 0.4rem 0.35rem rgba(0, 0, 0, 0.1))
+}
+
+.node-template:hover {
+    transition: all ease 150ms;
+    border: solid 2px #1abc9c;
 }
 
 .node-template .node-template-header {
@@ -28,9 +57,13 @@
     margin: .25rem;
     font-weight: 500;
     /* background-color: var(--color-1); */
-    padding: .5rem;
-    color: var(--color-1);
+    /* padding: .5rem; */
+    /* color: var(--color-1); */
     border-radius: var(--border-radius);
+}
+
+.node-template.activate-node {
+    border-color: blue;
 }
 
 ::ng-deep .graph .edge {
@@ -61,4 +94,45 @@
     align-content: center;
     align-items: center;
     width: 100%;
+}
+
+.node-template-zone-actions {
+    display: flex;
+    opacity: .9;
+    justify-content: center;
+    width: 100%;
+    margin: 0 .65rem;
+    gap: .5rem;
+    flex-direction: column;
+    transition: all ease 150ms;
+}
+
+.node-template-zone-actions:hover {
+    opacity: 1;
+}
+
+.node-template-zone-actions .btn-zone-secondary {
+    display: flex;
+    justify-content: space-between;
+    gap: .5rem
+}
+
+.node-template-zone-actions .btn-add-block {
+    background-color: transparent;
+    border: 0;
+    font-weight: 600;
+    width: 100%;
+    padding: .25rem .5rem;
+    background-color: #FFFFFF;
+    border-radius: var(--border-radius);
+}
+
+.node-alert {
+    background-color: tomato;
+    color: white;
+    width: auto;
+    padding: 0 .35rem;
+    font-size: 70%;
+    font-weight: 600;
+    position: absolute;
 }

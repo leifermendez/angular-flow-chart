@@ -1,205 +1,104 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
+import { Step } from '../models/step';
+import { ManagmentStateService, StepState } from './managment-state.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FlowChartService {
+
+
+  public STEPS: Array<Step> = []
   public zoneDimensions$: BehaviorSubject<[number, number]> = new BehaviorSubject([0, 0])
-  public data$: BehaviorSubject<any> = new BehaviorSubject(null)
-  public dataChild$: BehaviorSubject<any> = new BehaviorSubject(null)
-  public dataYoutubers$: BehaviorSubject<any> = new BehaviorSubject(null)
-  constructor() { }
+  public stepSelect$: Subject<any> = new Subject
+  // public data$: Subject<any> = new Subject
+  // public nodeSelected$: BehaviorSubject<any> = new BehaviorSubject(null)
+  // public nodeSelectedChange$: BehaviorSubject<any> = new BehaviorSubject(null)
+  // public nodeSelectedElement$: BehaviorSubject<any> = new BehaviorSubject(null)
+  // public nodeSelectedElementChange$: Array<{ key: string, state: BehaviorSubject<any> }> = []
+  // public formState$: BehaviorSubject<any> = new BehaviorSubject(null);
+
+  constructor(private managmentState: ManagmentStateService) { }
 
   calculateDimensions(el: HTMLElement): void {
     const { width, height } = el.getBoundingClientRect()
-    this.zoneDimensions$.next([width - 5, height - 8])
+    this.zoneDimensions$.next([width - 20, height - 8])
   }
 
-  setDataFrom(source: string): void {
-    //TODO: Aqui podemos hacer un llamado a API HTTP!
-    const httpMock: any = {
-      angular: {
-        id: 'first',
-        label: 'A',
-        data: {
-          title: 'Angular 🎁',
-          img: 'https://i.imgur.com/Rb27aIA.png',
-          text: '<b>_LEIFER MENDEZ_</b> <br>Aprenderemos programación de la manera más dinamica y divertida posible, con ejercicios interesantes'
-        },
-        action: {
-          more: 'Ver ruta',
-          src: 'angular',
-          key: 'childs'
+  addStep(): void {
+
+    const step: StepState = {
+      type: undefined,
+      id: Math.floor(Date.now() / 1000).toString(),
+      structure: [],
+      label: '_'
+    }
+
+    this.managmentState.createStepObservable(
+      `step_${step.id}`,
+      step
+    )
+
+  }
+
+  passToSideBar(key: string, element?: number, index?: number): void {
+    const tree = [key, element, index].filter(a => (a !== undefined))
+
+    this.stepSelect$.next(tree)
+  }
+
+  //TODO No tocar 🔴
+  public makeLinks(steps: Step[]): any {
+
+    let link: any[] = []
+    // Si no tiene valores retornamos 
+    if (!steps.length) {
+
+      return steps
+    }
+
+    if (steps.length) {
+      link = steps.map((step, index) => {
+        if (index) {
+          console.log('---SOURCE--', steps[index - 1].id);
+
+          return {
+            id: `link_${index}`, // 1>
+            source: steps[index - 1].id,
+            target: step.id,
+            label: 'is parent of'
+          }
+        } else {
+          return null
         }
-      }
+      })
+
+      link = link.filter(a => (a))
+
     }
-    this.data$.next(httpMock[source])
+
+    return link
+
   }
 
-  setDataFromChild(source: string): void {
-    //TODO: Aqui podemos hacer un llamado a API HTTP!
-    const httpMock: any = {
-      angular: {
-        nodes: [
+  //TODO all below deprecated
 
-          {
-            id: 'c1',
-            label: 'C1',
-            data: {
-              title: 'Go ANGULAR!',
-              img: 'https://i.imgur.com/Ajzts77.png',
-              text: '<b>Angular</b> es un framework opensource desarrollado por Google para facilitar la creación y programación de aplicaciones web de una sola página, las webs SPA (Single Page Application).'
-            }
-          },
-          {
-            id: 'c2',
-            label: 'C2',
-            data: {
-              title: 'TS 🤘',
-              img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Typescript_logo_2020.svg/1200px-Typescript_logo_2020.svg.png',
-              text: 'Learn one way to build applications with Angular and reuse your code and abilities to build apps for any deployment target. For web, mobile web.'
-            },
-            action: {
-              more: 'Ver ruta',
-              src: 'ts',
-              key: 'youtubers'
-            }
-          },
-          {
-            id: 'c3',
-            label: 'C3',
-            data: {
-              title: 'Alan 🤘',
-              img: 'https://cdn.iconscout.com/icon/free/png-256/javascript-2752148-2284965.png',
-              text: 'Learn one way to build applications with Angular and reuse your code and abilities to build apps for any deployment target. For web, mobile web.'
-            }
-          }
-        ],
-        links: [
-
-          {
-            id: 'a',
-            source: 'first',
-            target: 'c1',
-            label: 'is parent of'
-          }, {
-            id: 'b',
-            source: 'c1',
-            target: 'c3',
-            label: 'custom label'
-          }, {
-            id: 'd',
-            source: 'c1',
-            target: 'c2',
-            label: 'custom label'
-          }, {
-            id: 'e',
-            source: 'c2',
-            target: 'c3',
-            label: 'first link'
-          }
-        ]
-      }
-    }
-    this.dataChild$.next(httpMock[source])
+  selectCard(step: Step): void {
+    // this.nodeSelected$.next(step)
   }
 
-  setDataYoutubers(source: string): void {
-    //TODO: Aqui podemos hacer un llamado a API HTTP!
-    const httpMock: any = {
-      angular: {
-        nodes: [
-          {
-            id: 'c1',
-            label: 'C1',
-            data: {
-              title: 'Go ANGULAR!',
-              img: 'https://i.imgur.com/Ajzts77.png',
-              text: '<b>Angular</b> es un framework opensource desarrollado por Google para facilitar la creación y programación de aplicaciones web de una sola página, las webs SPA (Single Page Application).'
-            }
-          },
-          {
-            id: 'c2',
-            label: 'C2',
-            data: {
-              title: 'TS 🤘',
-              img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Typescript_logo_2020.svg/1200px-Typescript_logo_2020.svg.png',
-              text: 'Learn one way to build applications with Angular and reuse your code and abilities to build apps for any deployment target. For web, mobile web.'
-            }
-          },
-          {
-            id: 'c3',
-            label: 'C3',
-            data: {
-              title: 'Alan 🤘',
-              img: 'https://cdn.iconscout.com/icon/free/png-256/javascript-2752148-2284965.png',
-              text: 'Learn one way to build applications with Angular and reuse your code and abilities to build apps for any deployment target. For web, mobile web.'
-            }
-          }
-        ],
-        links: [
-          {
-            id: 'a',
-            source: 'first',
-            target: 'c1',
-            label: 'is parent of'
-          }, {
-            id: 'b',
-            source: 'c1',
-            target: 'c3',
-            label: 'custom label'
-          }, {
-            id: 'd',
-            source: 'c1',
-            target: 'c2',
-            label: 'custom label'
-          }, {
-            id: 'e',
-            source: 'c2',
-            target: 'c3',
-            label: 'first link'
-          }
-        ]
-      },
-      ts: {
-        nodes: [
-          {
-            id: 'ts1',
-            label: 'TS1',
-            data: {
-              title: 'Go ANGULAR!',
-              img: 'https://alan-buscaglia-portfolio.netlify.app/static/media/who_am_i_2.2b08c9ab.jpg',
-              text: '<b>Angular</b> es un framework opensource desarrollado por Google para facilitar la creación y programación de aplicaciones web de una sola página, las webs SPA (Single Page Application).'
-            }
-          },
-          {
-            id: 'ts2',
-            label: 'TS2',
-            data: {
-              title: 'Go ANGULAR!',
-              img: 'https://avatars.githubusercontent.com/u/7414771?v=4',
-              text: '<b>Angular</b> es un framework opensource desarrollado por Google para facilitar la creación y programación de aplicaciones web de una sola página, las webs SPA (Single Page Application).'
-            }
-          }
-        ],
-        links: [
-          {
-            id: 't1',
-            source: 'c2',
-            target: 'ts1',
-            label: 'is parent of'
-          },
-          {
-            id: 't2',
-            source: 'c2',
-            target: 'ts2',
-            label: 'is parent of'
-          }
-        ]
-      }
-    }
-    this.dataYoutubers$.next(httpMock[source])
+  setNodeValue(block: Step): void {
+    // this.nodeSelectedChange$.next(block)
   }
+
+  setFormState(form: any): void {
+    // this.formState$.next(form)
+  }
+
+  getFromState(): any {
+    // return this.formState$.getValue()
+  }
+
 
 }

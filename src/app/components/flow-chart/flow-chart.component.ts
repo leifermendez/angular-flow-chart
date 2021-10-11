@@ -1,9 +1,13 @@
 import { FlowChartService } from './../../services/flow-chart.service';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit, ViewChild, ElementRef, Renderer2 } from '@angular/core';
 import * as shape from 'd3-shape';
 import { Edge, Graph, GraphComponent, Layout } from '@swimlane/ngx-graph';
 import { DagreNodesOnlyLayout } from 'src/app/services/layout.service';
 import { stepRound } from 'src/app/services/stepRound';
+import { Subject } from 'rxjs';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Step } from 'src/app/models/step';
+import { ManagmentStateService } from 'src/app/services/managment-state.service';
 @Component({
   selector: 'app-flow-chart',
   templateUrl: './flow-chart.component.html',
@@ -12,8 +16,13 @@ import { stepRound } from 'src/app/services/stepRound';
 })
 export class FlowChartComponent implements OnInit {
   @ViewChild('myChart') child!: GraphComponent;
+  @ViewChild('wrapperForeign') wrapperForeign!: ElementRef;
+
   dimensions: [number, number] = [0, 0];
   showRender: boolean = false;
+  flowForm: FormGroup = new FormGroup({})
+  flowFormSteps: FormArray = new FormArray([])
+  update$: Subject<boolean> = new Subject();
   dataNode: Array<any> = [] //TODO--> tarjetas
   dataLink: Array<any> = [] //TODO: ---> lineas verdes
 
@@ -24,46 +33,55 @@ export class FlowChartComponent implements OnInit {
   };
   public layout: Layout = new DagreNodesOnlyLayout();
 
-  constructor(private flowChartService: FlowChartService, private cd: ChangeDetectorRef) { }
+  constructor(
+    private flowChartService: FlowChartService,
+    private managmentState: ManagmentStateService,
+    private cd: ChangeDetectorRef
+  ) { }
 
   ngOnInit(): void {
+    this.listener$()
+    this.iniFlowState()
+  }
+
+  private listener$(): void {
     this.flowChartService.zoneDimensions$.subscribe(([w, h]) => {
       if ((w) && (h)) {
         this.dimensions = [w, h]
         this.showRender = true;
-
         this.cd.detectChanges()
         this.callAfterLoad()
       }
     })
+    //TODO: State principal
+    const observer1$ = this.managmentState.steps$
+      .subscribe((steps) => {
+        const link = this.flowChartService.makeLinks(steps)
+        this.dataLink = [...link]
+        this.dataNode = [...steps]
+        // this.update$.next(true)
 
-    this.flowChartService.data$.subscribe(data => {
-      if (data) {
-        this.dataNode = [data] //TODO 1 valor!
-      }
-    })
+        console.log('🔴🔴🔴', link);
 
-    this.flowChartService.dataChild$.subscribe(data => {
-      if (data) {
-        this.dataNode = [...this.dataNode, ...data.nodes]
-        this.dataLink = [...this.dataLink, ...data.links]
-        console.log('data childs', data)
-      }
-    })
+      })
 
-    this.flowChartService.dataYoutubers$.subscribe(data => {
-      console.log('....', data);
+    // this.flowChartService.data$.subscribe(data => {
 
-      if (data) {
-        this.dataNode = [...this.dataNode, ...data.nodes]
-        this.dataLink = [...this.dataLink, ...data.links]
-        console.log('data youtubers', data)
-      }
-    })
+    //   if (data) {
+    //     const { node, link } = data
 
+
+    //     //TODO: Layer formReactive
+    //     this.setterSteps(node)
+
+    //     //TODO: Layer ngx-grahp
+    //     this.dataNode = [...node]
+    //     this.dataLink = [...link]
+    //   }
+    // })
   }
 
-  callAfterLoad(): void {
+  private callAfterLoad(): void {
 
     /* Recalculate Positions of endpoints while moving / dragging, added i as an identifier that it was moved */
 
@@ -90,7 +108,7 @@ export class FlowChartComponent implements OnInit {
       };
 
       edge.points = [startingPoint, endingPoint];
-      console.log([startingPoint, endingPoint]);
+      // console.log([startingPoint, endingPoint]);
 
       return graph;
     };
@@ -112,6 +130,65 @@ export class FlowChartComponent implements OnInit {
         .curve(this.curve);
       return lineFunction(points);
     };
+  }
+
+  public iniFlowState(): void {
+
+    this.flowForm = new FormGroup(
+      {
+        name: new FormControl(
+          'name',
+          [
+            Validators.required
+          ]
+        ),
+        steps: new FormArray(
+          [],
+          [
+            Validators.required
+          ]
+        ),
+        status: new FormControl(
+          true,
+          [
+            Validators.required,
+            Validators.requiredTrue
+          ]
+        ),
+      }
+    )
+
+  }
+
+  public setterSteps(node: Step[]): void {
+    // this.flowFormSteps.clear()
+    // this.flowFormSteps = this.flowForm.get("steps") as FormArray;
+
+    node.forEach((s: Step) => {
+      const { structure, id, label, type } = s
+
+      console.log(s);
+
+
+
+      // this.dataNode.push(newFormStep)
+    })
+  }
+
+  public removeStep(id: number): void {
+    // const index = this.dataNode.findIndex(a => a.id === id)
+    // console.log(`Remove index ${index}`);
+    // this.dataNode.splice(index, 1)
+
+
+    // this.dataLink.splice(index, 1)
+    // this.dataLink.splice(index - 1, 1)
+    // // this.dataLink.splice(index - 1, 1)
+
+    // // this.dataNode = [...this.dataNode.splice(index, 1)]
+
+    // this.flowFormSteps.removeAt(index)
+    // this.update$.next(true)
   }
 
 }

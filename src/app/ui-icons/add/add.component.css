@@ -1,0 +1,6 @@
+.wrapper-icon {
+    display: flex;
+    align-items: center;
+    align-content: center;
+    gap: .5rem
+}

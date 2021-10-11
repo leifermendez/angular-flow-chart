@@ -8,31 +8,39 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
   menu: Array<any> = []
-  constructor(private flowChartService: FlowChartService) { }
+  constructor(public flowChartService: FlowChartService) { }
 
   ngOnInit(): void {
     this.menu = [
       {
-        name: 'ANGULAR',
+        name: 'PRIMER PASO',
         action: 'get_angular_team'
       },
       {
-        name: 'REACT',
+        name: 'EXAMPLE',
         action: 'get_react_team'
       },
       {
-        name: 'GENERAL',
+        name: 'EXAMPLE',
         action: 'get_general_team'
       }
     ]
+
+    this.listener$()
   }
 
   callSource(): void {
-    this.flowChartService.setDataFrom('angular')
+    this.flowChartService.addStep()
   }
 
-  callChild(): void {
-    this.flowChartService.setDataFromChild('angular')
+  listener$(): void {
+    // this.flowChartService.formState$.subscribe(res => {
+    //   if (res) {
+    //     console.log('🆗🆗');
+    //   }
+    // })
   }
+
+
 
 }

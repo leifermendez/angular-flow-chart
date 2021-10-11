@@ -1,0 +1,20 @@
+.sidebar-options-wrapper {
+    background-color: #FFFFFF;
+    z-index: 1;
+    position: fixed;
+    right: 0;
+    width: 350px;
+    height: 100%;
+    padding: 2rem .5rem;
+    border-left: solid 1px #dddddd;
+}
+
+.sidebar-options-wrapper ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.sidebar-options-wrapper h4 {
+    color: #1a1a1a
+}

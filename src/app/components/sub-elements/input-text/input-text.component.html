@@ -1,0 +1,5 @@
+<div class="wrapper-input" (click)="selectInput($event)">
+    <input [(ngModel)]="value" type="text" placeholder="Hello!">
+    <br>
+    <span [style]="customStyle | styleArray"> {{value}}</span>
+</div>
